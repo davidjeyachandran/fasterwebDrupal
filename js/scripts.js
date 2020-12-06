@@ -36,25 +36,21 @@ ga = null;
     externalScriptObject: externalScriptObject,
     url: {
       "/": {
-        pageFunction: function (urlTarget, externalScriptObject) {},
+        pageFunction: function (urlTarget, jQuery, ga) {},
       },
-      pageFunction: function (urlTarget, externalScriptObject) {
-        const Drupal = externalScriptObject.Drupal;
-        const ga = externalScriptObject.ga;
-        const jQuery = externalScriptObject.jQuery;
+      all: {
+        pageFunction: function (urlTarget, externalScriptObject) {
+          const [Drupal, jQuery, ga] = externalScriptObject;
+          if (ga) {
+            ga("set", "dimension1", "faster");
+            ga("send", "pageview", urlTarget, {
+              location: window.location.href,
+            });
+          }
+          if (Drupal) Drupal.attachBehaviors();
 
-        if (ga) {
-          ga("set", "dimension1", "faster");
-          ga("send", "pageview", urlTarget, {
-            location: window.location.href,
-          });
-        }
-        if (Drupal) {
-          console.log("Drupal attach behaviours");
-          Drupal.attachBehaviors();
-        }
-
-        console.log("All url callback: " + window.location.pathname);
+          console.log("All url callback: " + window.location.pathname);
+        },
       },
     },
   };
