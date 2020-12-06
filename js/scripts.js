@@ -40,7 +40,9 @@ ga = null;
       },
       all: {
         pageFunction: function (urlTarget, externalScriptObject) {
-          const [Drupal, jQuery, ga] = externalScriptObject;
+          console.log("All url callback: " + window.location.pathname);
+
+          const { Drupal, jQuery, ga } = externalScriptObject;
           if (ga) {
             ga("set", "dimension1", "faster");
             ga("send", "pageview", urlTarget, {
@@ -48,8 +50,6 @@ ga = null;
             });
           }
           if (Drupal) Drupal.attachBehaviors();
-
-          console.log("All url callback: " + window.location.pathname);
         },
       },
     },
