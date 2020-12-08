@@ -13,30 +13,13 @@ ga = null;
 
   const websiteConfig = {
     urlInclude: [],
-    urlExclude: [
-      "*logout*",
-      "/admin_menu*",
-      "/contact",
-      "*admin/*",
-      "*.txt",
-      "*.doc",
-      "*.docx",
-      "*.pdf",
-      "*.ppt",
-      "*.pptx",
-      "*.mp3",
-      "*.mp4",
-      "*.avi",
-      "*.jpg",
-      "*.jpeg",
-      "*.zip",
-    ],
+    urlExclude: ["*logout*", "/admin_menu*", "*admin/*"],
     doNotFetch: ["*logout*"],
-    elementSelector: null,
+    elementSelector: "#page",
     externalScriptObject: externalScriptObject,
     url: {
       "/": {
-        pageFunction: function (urlTarget, jQuery, ga) {},
+        pageFunction: function (urlTarget, externalScriptObject) {},
       },
       all: {
         pageFunction: function (urlTarget, externalScriptObject) {
@@ -55,14 +38,9 @@ ga = null;
     },
   };
 
+  // @TODO - add config so this can be run only for Anonymous users
   window.addEventListener("load", function () {
     // console.log(websiteConfig);
     window.faster(websiteConfig);
   });
-
-  Drupal.behaviors.fasterweb = {
-    attach: function (context, settings) {
-      console.log("Running Faster");
-    },
-  };
 })(jQuery, ga);
