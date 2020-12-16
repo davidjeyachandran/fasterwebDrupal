@@ -4,7 +4,7 @@ We believe that **anyone**, **anywhere** with **any device** should be able to a
 
 When someone uses your website, their experience depends on where they are, their bandwidth and their device. With this module, someone living far from the server, on a 512Kb Internet connection and using an old phone will still get an amazing user experience - sub second page loads on most links. The module does not change the first page load on your site - it accelerates subsequent clicks of links in your site.
 
-##How it works?
+## How it works?
 On page load:
 
 - We intelligently prefech the pages the user is most likely to click on
