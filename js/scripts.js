@@ -1,21 +1,21 @@
-ga = null;
-
-(function ($, ga) {
+(function ($, Drupal) {
   /* This code must NOT be in Drupal.behaviours because we call Drupal.attachBehaviors()
     that calls all Drupal.behaviours and we do not want to call recursively the code below.
   */
 
-  const externalScriptObject = new Object({
+  var googleAnalytics = window.ga || null;
+
+  var externalScriptObject = new Object({
     Drupal,
     jQuery,
-    ga,
+    ga: googleAnalytics,
   });
 
-  const websiteConfig = {
+  var websiteConfig = {
     urlInclude: [],
     urlExclude: ["*logout*", "/admin_menu*", "*admin/*"],
     doNotFetch: ["*logout*"],
-    elementSelector: "#page",
+    elementSelector: null,
     externalScriptObject: externalScriptObject,
     url: {
       "/": {
@@ -25,7 +25,8 @@ ga = null;
         pageFunction: function (urlTarget, externalScriptObject) {
           console.log("All url callback: " + window.location.pathname);
 
-          const { Drupal, jQuery, ga } = externalScriptObject;
+          var Drupal = externalScriptObject.Drupal;
+          var ga = externalScriptObject.ga;
           if (ga) {
             ga("set", "dimension1", "faster");
             ga("send", "pageview", urlTarget, {
@@ -38,9 +39,7 @@ ga = null;
     },
   };
 
-  // @TODO - add config so this can be run only for Anonymous users
   window.addEventListener("load", function () {
-    // console.log(websiteConfig);
     window.faster(websiteConfig);
   });
-})(jQuery, ga);
+})(jQuery, Drupal);
