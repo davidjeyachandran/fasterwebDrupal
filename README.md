@@ -4,7 +4,25 @@ We believe that **anyone**, **anywhere** with **any device** should be able to a
 
 When someone uses your website, their experience depends on where they are, their bandwidth and their device. With this module, someone living far from the server, on a 512Kb Internet connection and using an old phone will still get an amazing user experience - sub second page loads on most links. The module does not change the first page load on your site - it accelerates subsequent clicks of links in your site.
 
+## How to use it?
+
+- Copy the FasterWeb module to your contrib module folder
+- Enable it
+- Open the website in Incognito mode (as an anonymous user)
+
+Initially as you click links, the page load will be slow, as FasterWeb learns how you use the website. After a minute, you'll notice that links open instantly and you can see in the Chrome Inspector console which links are getting prefetched.
+
+## Configuration
+
+We're working to make the module as close to Zero config as we can. We have some basic config in the module's js/scripts.js file in the variable (websiteConfig). You can exclude urls here (eg. we have a React App embedded on some pages that don't play with FasterWeb) or if it's simpler you can include urls that FasterWeb will work on.
+
+- urlExclude
+- urlInclude
+
+If you have added Javascript on your Drupal site without using Drupal behaviors, these will stop working. You can fix these by adding these as "pageFunctions". An example is a slider you've added on your homepage that is initiated with Javascript. David, the module maintainer, is happy to help in this process.
+
 ## How it works?
+
 On page load:
 
 - We intelligently prefech the pages the user is most likely to click on
@@ -37,8 +55,10 @@ The FasterWeb module connects to an external FasterWeb service. Analytics for ev
 
 ## Cost
 
-- free for personal sites
-- low cost for not-for-profits
+At some point, if we can add signicant value over other services, I'd like to charge for the backend service. However keeping it free for:
+
+- personal sites
+- Drupal community sites
 
 ## Components of the solution
 
