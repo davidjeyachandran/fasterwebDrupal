@@ -2,4 +2,3 @@ name = FasterWeb
 description = Integrates with the FasterWeb service
 package = Performance
 core = 7.x
-scripts[] = js/scripts.js

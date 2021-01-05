@@ -1,6 +1,18 @@
 <?php
 
 function fasterweb_init() {
-  // drupal_add_js('https://fasterweb.io/faster-dev.js', 'external');
-  drupal_add_js(drupal_get_path('module', 'fasterweb') . '/js/faster-dev.js');
+  if (user_is_anonymous()) {
+
+    // Add FasterWeb and put this last
+    drupal_add_js('https://fasterweb.io/faster-dev.js' , array(
+      'type' => 'external',
+      'weight' => 100,
+    ));
+    drupal_add_js(drupal_get_path('module', 'fasterweb') .'/js/scripts.js' , array(
+      'weight' => 101,
+    ));
+  } else {
+      // Add to Drupal.settings - FasterWeb disabled
+      drupal_add_js(array('fasterWeb' => 0), 'setting');
+  }
 }
