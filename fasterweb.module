@@ -1,11 +1,20 @@
 <?php
 
+/**
+ * Implements hook_init().
+ */
 function fasterweb_init() {
   if (user_is_anonymous()) {
 
+    $debug = variable_get('fasterweb_debug');
+    drupal_add_js(array('fasterweb' => array('debug' => $debug)), 'setting');
+
     // Add FasterWeb and put this last
-    drupal_add_js('https://fasterweb.io/faster-dev.js' , array(
-      'type' => 'external',
+    // drupal_add_js('https://fasterweb.io/faster-dev.js' , array(
+    //   'type' => 'external',
+    //   'weight' => 100,
+    // ));
+    drupal_add_js(drupal_get_path('module', 'fasterweb') .'/js/faster-dev.js' , array(
       'weight' => 100,
     ));
     drupal_add_js(drupal_get_path('module', 'fasterweb') .'/js/scripts.js' , array(
@@ -15,4 +24,53 @@ function fasterweb_init() {
       // Add to Drupal.settings - FasterWeb disabled
       drupal_add_js(array('fasterWeb' => 0), 'setting');
   }
+}
+
+
+/**
+ * Implements hook_menu().
+ */
+function fasterweb_menu() {
+  $items['admin/config/development/performance/default'] = array(
+    'title' => 'Performance',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -10,
+  );
+
+  $items['admin/config/development/performance/fasterweb'] = array(
+    'title' => 'Faster Web Configuration',
+    'page callback' => 'drupal_get_form',
+    'page arguments'  => array('fasterweb_config_form'),
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => -9,
+  );
+
+  return $items;
+}
+
+/**
+ * Page callback: Configuration form to update module settings.
+ */
+function fasterweb_config_form($form, &$form_state) {
+  $form['fasterweb_debug'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Debug mode'),
+    '#description' => t('Print messages to console so you can see what FasterWeb is doing.'),
+    '#default_value' => variable_get('fasterweb_debug', 1),
+  );
+
+  $form['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+  );
+
+  return $form;
+}
+
+function fasterweb_config_form_submit($form, $form_state) {
+  
+    $formValue = $form_state['values']['fasterweb_debug'];
+    variable_set('fasterweb_debug', $formValue);
+
 }
