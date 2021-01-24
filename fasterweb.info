@@ -1,4 +1,6 @@
 name = FasterWeb
 description = Integrates with the FasterWeb service
-package = Performance
+package = Performance and Scalability
 core = 7.x
+
+configure = admin/config/development/performance/fasterweb
