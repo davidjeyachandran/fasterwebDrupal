@@ -9,17 +9,19 @@ function fasterweb_init() {
     $debug = variable_get('fasterweb_debug');
     drupal_add_js(array('fasterweb' => array('debug' => $debug)), 'setting');
 
-    // Add FasterWeb and put this last
-    // drupal_add_js('https://fasterweb.io/faster-dev.js' , array(
-    //   'type' => 'external',
-    //   'weight' => 100,
-    // ));
-    drupal_add_js(drupal_get_path('module', 'fasterweb') .'/js/faster-dev.js' , array(
+    drupal_add_js('https://fasterweb.io/faster-dev.js' , array(
+      'type' => 'external',
       'weight' => 100,
     ));
     drupal_add_js(drupal_get_path('module', 'fasterweb') .'/js/scripts.js' , array(
       'weight' => 101,
     ));
+
+    // Only for local testing of the Faster Library
+    // drupal_add_js(drupal_get_path('module', 'fasterweb') .'/js/faster-dev.js' , array(
+    //   'weight' => 100,
+    // ));
+    
   } else {
       // Add to Drupal.settings - FasterWeb disabled
       drupal_add_js(array('fasterWeb' => 0), 'setting');
