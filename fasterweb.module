@@ -53,6 +53,11 @@ function fasterweb_menu() {
  * Page callback: Configuration form to update module settings.
  */
 function fasterweb_config_form($form, &$form_state) {
+  $form['description'] = [
+    '#type' => 'item',
+    '#markup' => t('Welcome to the <strong>FasterWeb</strong> configuration.'),
+  ];
+
   $form['fasterweb_debug'] = array(
     '#type' => 'checkbox',
     '#title' => t('Debug mode'),
