@@ -23,11 +23,10 @@
             },
             all: {
               pageFunction: function (urlTarget, externalScriptObject) {
-                console.log("All url callback: " + window.location.pathname);
+                // console.log("All url callback: " + window.location.pathname);
 
                 if (window.ga) {
-                  window.ga("set", "dimension1", "faster");
-                  window.ga("send", "pageview", urlTarget);
+                  // window.ga("send", "pageview", urlTarget);
                 }
 
                 var Drupal = externalScriptObject.Drupal;
@@ -37,9 +36,7 @@
           },
         };
 
-        window.addEventListener("load", function () {
-          window.faster(websiteConfig);
-        });
+        window.faster(websiteConfig);
       }
     },
   };
