@@ -1,6 +1,5 @@
 name = FasterWeb
-description = Integrates with the FasterWeb service
+description = Better Web Performance with Intelligent Prefetching - connects to the FasterWeb service
 package = Performance and Scalability
 core = 7.x
-
 configure = admin/config/development/performance/fasterweb
