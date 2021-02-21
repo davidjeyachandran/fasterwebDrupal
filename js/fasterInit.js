@@ -12,6 +12,7 @@
 
         var websiteConfig = {
           debug: settings.fasterweb.debug,
+          type: "Drupal 7",
           urlInclude: [],
           urlExclude: ["*logout*", "/admin_menu*", "*admin/*"],
           urlDoNotFetch: ["*logout*", "*/node/*/edit", "*/node/add"],
@@ -36,7 +37,7 @@
           },
         };
 
-        window.faster(websiteConfig);
+        window.faster.init(websiteConfig);
       }
     },
   };
