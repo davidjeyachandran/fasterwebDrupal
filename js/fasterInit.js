@@ -11,10 +11,11 @@
         });
 
         var websiteConfig = {
+          type: "Drupal 7",
           debug: settings.fasterweb.debug,
-          urlInclude: [],
-          urlExclude: ["*logout*", "/admin_menu*", "*admin/*"],
-          urlDoNotFetch: ["*logout*", "*/node/*/edit", "*/node/add"],
+          urlInclude: settings.fasterweb.urls_include,
+          urlExclude: settings.fasterweb.urls_exclude,
+          urlDoNotFetch: settings.fasterweb.urls_do_not_prefetch,
           elementSelector: null,
           externalScriptObject: externalScriptObject,
           url: {
@@ -23,11 +24,10 @@
             },
             all: {
               pageFunction: function (urlTarget, externalScriptObject) {
-                console.log("All url callback: " + window.location.pathname);
+                // console.log("All url callback: " + window.location.pathname);
 
                 if (window.ga) {
-                  window.ga("set", "dimension1", "faster");
-                  window.ga("send", "pageview", urlTarget);
+                  // window.ga("send", "pageview", urlTarget);
                 }
 
                 var Drupal = externalScriptObject.Drupal;
@@ -37,9 +37,7 @@
           },
         };
 
-        window.addEventListener("load", function () {
-          window.faster(websiteConfig);
-        });
+        window.faster.init(websiteConfig);
       }
     },
   };

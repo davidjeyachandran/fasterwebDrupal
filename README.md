@@ -1,16 +1,18 @@
 # FasterWeb Drupal 7 module
 
-We believe that **anyone**, **anywhere** with **any device** should be able to access the information and the services that they need... **instantly**.
+Turn on web performance. Turn your Drupal site into an SPA (Single Page Application).
 
-When someone uses your website, their experience depends on where they are, their bandwidth and their device. With this module, someone living far from the server, on a 512Kb Internet connection and using an old phone will still get an amazing user experience - sub second page loads on most links. The module does not change the first page load on your site - it accelerates subsequent clicks of links in your site.
+> We believe that **anyone**, **anywhere** with **any device** should be able to access the information they need... **instantly**.
+
+Enable the FasterWeb module and your website users will experience webpages that open instantly, after the first page load.
 
 ## How to use it?
 
-- Copy the FasterWeb module to your contrib module folder
-- Enable it
+- `composer require drupal/fasterweb`
+- Enable the FasterWeb module
 - Open the website in Incognito mode (as an anonymous user)
 
-Initially as you click links, the page load will be slow, as FasterWeb learns how you use the website. After a minute, you'll notice that links open instantly and you can see in the Chrome Inspector console which links are getting prefetched.
+Initially as you click links, the page load will be slow, as FasterWeb learns how you use the website. In less than a minute, you'll notice that links open instantly. Use the Chrome Inspector console to see which links are prefetched.
 
 ## Configuration
 
