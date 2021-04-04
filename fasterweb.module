@@ -6,8 +6,21 @@
 function fasterweb_init() {
   if (user_is_anonymous()) {
 
-    $debug = variable_get('fasterweb_debug');
-    drupal_add_js(array('fasterweb' => array('debug' => $debug)), 'setting');
+  // @todo check what's returned by get()
+    $settingsFasterWeb = array(
+      'debug' => !variable_get('fasterweb_debug') ? FALSE : TRUE,
+      'urls_exclude' => _create_array(
+        variable_get('urls_exclude'),
+        ["*logout*", "/admin_menu*", "*admin/*"]
+      ),
+      'urls_include' =>_create_array(variable_get('urls_include')),
+      'urls_do_not_prefetch' => _create_array(
+        variable_get('urls_do_not_prefetch'),
+        ["*logout*", "*/node/*/edit", "*/node/add*"]
+      )
+      );
+
+    drupal_add_js(array('fasterweb' => $settingsFasterWeb), 'setting');
 
     drupal_add_js(drupal_get_path('module', 'fasterweb') .'/js/fasterLibrary.js' , array(
       'weight' => 100,
@@ -18,7 +31,7 @@ function fasterweb_init() {
     
   } else {
       // Add to Drupal.settings - FasterWeb disabled
-      drupal_add_js(array('fasterWeb' => 0), 'setting');
+      drupal_add_js(array('fasterweb' => array('enabled' => FALSE)), 'setting');
   }
 }
 
@@ -61,6 +74,46 @@ function fasterweb_config_form($form, &$form_state) {
     '#default_value' => variable_get('fasterweb_debug', 1),
   );
 
+  $form['settings'] = array(
+    '#type' => 'vertical_tabs',
+  );
+  
+  // Exclude tab.
+  $form['exclude'] = [
+    '#type' => 'fieldset',
+    '#title' => t('Exclude paths (optional)'),
+    '#description' => t('Add paths that need to be excluded from FasterWeb. Include the forward slash at the beginning of the path and you can use the * wildcard if necessary.'),
+    '#group' => 'settings',
+  ];
+  $form['exclude']['urls_exclude'] = [
+    '#type' => 'textarea',
+    '#title' => t('Exclude these paths'),
+    '#description' => t('We can exclude pages where FasterWeb does not work.'),
+    '#default_value' => variable_get('urls_exclude'),
+  ];
+  $form['exclude']['urls_do_not_prefetch'] = [
+    '#type' => 'textarea',
+    '#title' => t('Do not prefetch these paths'),
+    '#description' => t('We do not want to prefetch links like the logout link.'),
+    '#default_value' => variable_get('urls_do_not_prefetch'),
+    '#maxlength' => 128,
+    '#size' => 128,
+  ];
+
+  // Include tab.
+  $form['include'] = [
+    '#type' => 'fieldset',
+    '#title' => t('Include paths (optional)'),
+    '#description' => t('Add paths to be included for FasterWeb.  Normally this is empty to include <strong>all</strong> pages. If adding paths, include the forward slash at the beginning of the path and you can use the * wildcard if necessary.'),
+    '#group' => 'settings',
+  ];
+  $form['include']['urls_include'] = [
+    '#type' => 'textarea',
+    '#title' => t('Include these paths'),
+    '#description' => t('Do you want to include only certain paths?'),
+    '#default_value' => variable_get('urls_include'),
+  ];      
+
   $form['actions']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save'),
@@ -74,4 +127,29 @@ function fasterweb_config_form_submit($form, $form_state) {
     $formValue = $form_state['values']['fasterweb_debug'];
     variable_set('fasterweb_debug', $formValue);
 
+    $formValue = $form_state['values']['urls_exclude'];
+    variable_set('urls_exclude', $formValue);
+
+    $formValue = $form_state['values']['urls_do_not_prefetch'];
+    variable_set('urls_do_not_prefetch', $formValue);
+
+    $formValue = $form_state['values']['urls_include'];
+    variable_set('urls_include', $formValue);
+}
+
+/**
+ * Creates an array combining two arrays - default values and the field values.
+ */
+function _create_array($field_value, $default_values = []) {
+  $return_array = $default_values;
+
+  // Convert field value into array.
+  foreach (explode(PHP_EOL, $field_value) as $value) {
+    if (!empty($value) and trim($value) != "") {
+      $return_array[] = trim($value);
+    }
+  }
+
+  // Remove empty values and return  
+  return $return_array;
 }

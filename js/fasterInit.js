@@ -11,11 +11,11 @@
         });
 
         var websiteConfig = {
-          debug: settings.fasterweb.debug,
           type: "Drupal 7",
-          urlInclude: [],
-          urlExclude: ["*logout*", "/admin_menu*", "*admin/*"],
-          urlDoNotFetch: ["*logout*", "*/node/*/edit", "*/node/add"],
+          debug: settings.fasterweb.debug,
+          urlInclude: settings.fasterweb.urls_include,
+          urlExclude: settings.fasterweb.urls_exclude,
+          urlDoNotFetch: settings.fasterweb.urls_do_not_prefetch,
           elementSelector: null,
           externalScriptObject: externalScriptObject,
           url: {
