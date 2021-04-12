@@ -1,0 +1,21 @@
+.faster-visible,
+.faster-hidden {
+  overflow: hidden;
+  /* This container should not have padding, borders, etc. */
+}
+.faster-visible {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 2s linear;
+}
+.faster-hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.faster-link {
+  /*background-color: lime;*/
+  /* cursor: url('https://fasterweb.io/img/cursor-rocket.png'), auto; */
+  border: 1px solid orange;
+}

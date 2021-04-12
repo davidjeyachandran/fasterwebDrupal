@@ -28,6 +28,7 @@ function fasterweb_init() {
     drupal_add_js(drupal_get_path('module', 'fasterweb') .'/js/fasterInit.js' , array(
       'weight' => 101,
     ));
+    drupal_add_css(drupal_get_path('module', 'fasterweb') . '/css/fasterweb.css');
     
   } else {
       // Add to Drupal.settings - FasterWeb disabled
