@@ -13,3 +13,7 @@
   opacity: 0;
   transition: visibility 0s 2s, opacity 2s linear;
 }
+
+/* .faster-link {
+  cursor: url('https://fasterweb.io/img/cursor-rocket.png'), auto;
+} */
